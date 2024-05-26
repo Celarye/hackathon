@@ -1,24 +1,5 @@
+#include "ledringSetup.h"
 #include "FastLED.h"
-#define NUM_LEDS 16
-#define DATA_PIN A0
-#define SCORE_PIN 6
-#define SCORE_LEDS 6
-#define BRIGHTNESS 25
-CRGB leds[NUM_LEDS];
-CRGB sleds[SCORE_LEDS];
-
-bool reachedEnd = false;
-byte gameState = 0;
-int period = 1000;
-unsigned long time_now = 0;
-byte Position = 0;
-byte level = 0;
-
-const byte ledSpeed[6] = {50, 40, 30, 20, 14, 7};
-
-// Static spots for each level
-const byte staticSpots[6] = {3, 5, 7, 9, 11, 13};
-
 void clearLEDS() {
   for (byte i = 0; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Black;
@@ -69,7 +50,9 @@ void loser() {
     clearLEDS();
     delay(500);
   }
-  gameState = 0;
+  
+  Serial.println(previousGameState);
+  gameState = previousGameState;
 }
 
 void ledringSetup() {
@@ -123,6 +106,7 @@ void ledringLoop() {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
+      previousGameState = gameState;
       if (Position == spot + 2 || Position == spot || Position == spot + 1) {
         level = gameState;
         gameState = 98;
@@ -145,6 +129,7 @@ void ledringLoop() {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
+      previousGameState = gameState;
       if (Position == spot + 2 || Position == spot || Position == spot + 1) {
         level = gameState;
         gameState = 98;
@@ -165,6 +150,7 @@ void ledringLoop() {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
+      previousGameState = gameState;
       if (Position == spot + 1) {
         level = gameState;
         gameState = 98;
@@ -185,6 +171,7 @@ void ledringLoop() {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
+      previousGameState = gameState;
       if (Position == spot + 1) {
         level = gameState;
         gameState = 98;
@@ -205,6 +192,7 @@ void ledringLoop() {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
+      previousGameState = gameState;
       if (Position == spot + 1) {
         level = gameState;
         gameState = 98;
@@ -225,6 +213,7 @@ void ledringLoop() {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
+      previousGameState = gameState;
       if (Position == spot + 1) {
         level = gameState;
         gameState = 98;
