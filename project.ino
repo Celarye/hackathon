@@ -17,6 +17,8 @@ myDFPlayer.play(sound u want in number: 1, 2...)
 if u just type myDFPlayer. it will show all options
 */
 
+bool reachedEnd = false;
+
 void setup()
 {
   setupmp3();

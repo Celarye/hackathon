@@ -1,5 +1,25 @@
-#include "ledringSetup.h"
 #include "FastLED.h"
+#define NUM_LEDS 16
+#define DATA_PIN A0
+#define SCORE_PIN 6
+#define SCORE_LEDS 6
+#define BRIGHTNESS 25
+
+CRGB leds[NUM_LEDS];
+CRGB sleds[SCORE_LEDS];
+
+byte gameState = 0;
+byte previousGameState = 0;
+byte level = 0;
+
+int period = 1000;
+unsigned long time_now = 0;
+byte Position = 0;
+
+const byte ledSpeed[6] = {50, 40, 30, 20, 14, 7};
+
+const byte staticSpots[6] = {3, 5, 7, 9, 11, 13};
+
 void clearLEDS() {
   for (byte i = 0; i < NUM_LEDS; i++) {
     leds[i] = CRGB::Black;
@@ -91,7 +111,7 @@ void ledringLoop() {
     FastLED.show();
   }
 
-  byte spot = staticSpots[gameState - 1];  // Define spot based on gameState
+  byte spot = staticSpots[gameState - 1];
 
   // Level 1
   if (gameState == 1) {
