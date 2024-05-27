@@ -72,7 +72,7 @@ void loser() {
   }
   
   Serial.println(previousGameState);
-  gameState = previousGameState;
+  gameState = previousGameState - 1;
 }
 
 void ledringSetup() {
@@ -138,7 +138,7 @@ void ledringLoop() {
 
   // Level 2
   if (gameState == 2) {
-    period = ledSpeed[0];
+    period = ledSpeed[1];
     if (millis() > time_now + period) {
       time_now = millis();
       leds[spot - 1] = CRGB(255, 190, 0);
@@ -161,7 +161,7 @@ void ledringLoop() {
 
   // Level 3
   if (gameState == 3) {
-    period = ledSpeed[0];
+    period = ledSpeed[2];
     if (millis() > time_now + period) {
       time_now = millis();
       leds[spot] = CRGB(0, 255, 0);
@@ -182,7 +182,7 @@ void ledringLoop() {
 
   // Level 4
   if (gameState == 4) {
-    period = ledSpeed[0];
+    period = ledSpeed[3];
     if (millis() > time_now + period) {
       time_now = millis();
       leds[spot] = CRGB(0, 255, 0);
