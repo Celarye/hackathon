@@ -4,10 +4,13 @@
 
 void setup()
 {
+  Serial.begin(9600);
   setupmp3();
+  Serial.println('setup done');
 }
 
 void loop()
 {
   loopmp3();
+  Serial.println('hello world');
 }

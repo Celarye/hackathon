@@ -66,6 +66,7 @@
 
 class DFRobotDFPlayerMini
 {
+
     Stream *_serial;
 
     unsigned long _timeOutTimer;
@@ -95,7 +96,7 @@ class DFRobotDFPlayerMini
 
     uint8_t device = DFPLAYER_DEVICE_SD;
 
-public:
+  public:
     uint8_t _handleType;
     uint8_t _handleCommand;
     uint16_t _handleParameter;

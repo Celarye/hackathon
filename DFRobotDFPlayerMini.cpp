@@ -11,7 +11,7 @@
  * @date  2016-12-07
  */
 
-#include "DFRobotDFPlayerMini.h"
+#include "modules/DFRobotDFPlayerMini.h"
 
 void DFRobotDFPlayerMini::setTimeOut(unsigned long timeOutDuration){
   _timeOutDuration = timeOutDuration;
@@ -530,5 +530,3 @@ int DFRobotDFPlayerMini::readFileCounts(){
 int DFRobotDFPlayerMini::readCurrentFileNumber(){
   return readCurrentFileNumber(DFPLAYER_DEVICE_SD);
 }
-
-
