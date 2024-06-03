@@ -5,11 +5,9 @@
 void setup()
 {
   setupmp3();
-  Serial.println('setup done');
 }
 
 void loop()
 {
   loopmp3();
-  Serial.println('hello world');
 }
