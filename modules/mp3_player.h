@@ -57,7 +57,7 @@ void setupmp3()
   myDFPlayer.setTimeOut(500); // Set serial communictaion time out 500ms
 
   //----Set volume----
-  myDFPlayer.volume(10);   // Set volume value (0~30).
+  myDFPlayer.volume(15);   // Set volume value (0~30).
   myDFPlayer.volumeUp();   // Volume Up
   myDFPlayer.volumeDown(); // Volume Down
 
@@ -84,48 +84,48 @@ void setupmp3()
   //  myDFPlayer.outputSetting(true, 15); //output setting, enable the output and set the gain to 15
 
   //----Mp3 play----
-  myDFPlayer.next(); // Play next mp3
-  delay(1000);
-  myDFPlayer.previous(); // Play previous mp3
-  delay(1000);
-  myDFPlayer.play(1); // Play the first mp3
-  delay(1000);
-  myDFPlayer.loop(1); // Loop the first mp3
-  delay(1000);
-  myDFPlayer.pause(); // pause the mp3
-  delay(1000);
-  myDFPlayer.start(); // start the mp3 from the pause
-  delay(1000);
-  myDFPlayer.playFolder(15, 4); // play specific mp3 in SD:/15/004.mp3; Folder Name(1~99); File Name(1~255)
-  delay(1000);
-  myDFPlayer.enableLoopAll(); // loop all mp3 files.
-  delay(1000);
-  myDFPlayer.disableLoopAll(); // stop loop all mp3 files.
-  delay(1000);
-  myDFPlayer.playMp3Folder(4); // play specific mp3 in SD:/MP3/0004.mp3; File Name(0~65535)
-  delay(1000);
-  myDFPlayer.advertise(3); // advertise specific mp3 in SD:/ADVERT/0003.mp3; File Name(0~65535)
-  delay(1000);
-  myDFPlayer.stopAdvertise(); // stop advertise
-  delay(1000);
-  myDFPlayer.playLargeFolder(2, 999); // play specific mp3 in SD:/02/004.mp3; Folder Name(1~10); File Name(1~1000)
-  delay(1000);
-  myDFPlayer.loopFolder(5); // loop all mp3 files in folder SD:/05.
-  delay(1000);
-  myDFPlayer.randomAll(); // Random play all the mp3.
-  delay(1000);
-  myDFPlayer.enableLoop(); // enable loop.
-  delay(1000);
-  myDFPlayer.disableLoop(); // disable loop.
-  delay(1000);
+  // myDFPlayer.next(); // Play next mp3
+  // delay(1000);
+  // myDFPlayer.previous(); // Play previous mp3
+  // delay(1000);
+  // myDFPlayer.play(1); // Play the first mp3
+  // delay(1000);
+  // myDFPlayer.loop(1); // Loop the first mp3
+  // delay(1000);
+  // myDFPlayer.pause(); // pause the mp3
+  // delay(1000);
+  // myDFPlayer.start(); // start the mp3 from the pause
+  // delay(1000);
+  // myDFPlayer.playFolder(15, 4); // play specific mp3 in SD:/15/004.mp3; Folder Name(1~99); File Name(1~255)
+  // delay(1000);
+  // myDFPlayer.enableLoopAll(); // loop all mp3 files.
+  // delay(1000);
+  // myDFPlayer.disableLoopAll(); // stop loop all mp3 files.
+  // delay(1000);
+  // myDFPlayer.playMp3Folder(4); // play specific mp3 in SD:/MP3/0004.mp3; File Name(0~65535)
+  // delay(1000);
+  // myDFPlayer.advertise(3); // advertise specific mp3 in SD:/ADVERT/0003.mp3; File Name(0~65535)
+  // delay(1000);
+  // myDFPlayer.stopAdvertise(); // stop advertise
+  // delay(1000);
+  // myDFPlayer.playLargeFolder(2, 999); // play specific mp3 in SD:/02/004.mp3; Folder Name(1~10); File Name(1~1000)
+  // delay(1000);
+  // myDFPlayer.loopFolder(5); // loop all mp3 files in folder SD:/05.
+  // delay(1000);
+  // myDFPlayer.randomAll(); // Random play all the mp3.
+  // delay(1000);
+  // myDFPlayer.enableLoop(); // enable loop.
+  // delay(1000);
+  // myDFPlayer.disableLoop(); // disable loop.
+  // delay(1000);
 
   //----Read imformation----
-  Serial.println(myDFPlayer.readState());               // read mp3 state
-  Serial.println(myDFPlayer.readVolume());              // read current volume
-  Serial.println(myDFPlayer.readEQ());                  // read EQ setting
-  Serial.println(myDFPlayer.readFileCounts());          // read all file counts in SD card
-  Serial.println(myDFPlayer.readCurrentFileNumber());   // read current play file number
-  Serial.println(myDFPlayer.readFileCountsInFolder(3)); // read file counts in folder SD:/03
+  //Serial.println(myDFPlayer.readState());               // read mp3 state
+  //Serial.println(myDFPlayer.readVolume());              // read current volume
+  //Serial.println(myDFPlayer.readEQ());                  // read EQ setting
+  //Serial.println(myDFPlayer.readFileCounts());          // read all file counts in SD card
+  //Serial.println(myDFPlayer.readCurrentFileNumber());   // read current play file number
+  //Serial.println(myDFPlayer.readFileCountsInFolder(3)); // read file counts in folder SD:/03
 }
 
 void loopmp3()
