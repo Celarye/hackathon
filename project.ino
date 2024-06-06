@@ -24,5 +24,6 @@ void setup()
 
 void loop()
 {
-  
+  myDFPlayer.play(1);
+  delay(2000);
 }
