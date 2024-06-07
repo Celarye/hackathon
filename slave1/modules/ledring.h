@@ -87,7 +87,7 @@ void ledringSetup() {
   Serial.println("Reset");
 }
 
-void ledringLoop() {
+void ledringLoop(int playerStage) {
   FastLED.setBrightness(BRIGHTNESS);
 
   // Level setup
