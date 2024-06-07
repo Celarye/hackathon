@@ -40,42 +40,4 @@ void setup()
 void loop()
 {
   ledringLoop();
-<<<<<<< HEAD
-=======
-
-  P1VorigLvl = gameStatePlayer1;
-  P2VorigLvl = gameStatePlayer2;
-
-  if (gameStatePlayer1 > P1VorigLvl)
-  {
-    // play winning sound
-  }
-  else if (gameStatePlayer1 < P1VorigLvl)
-  {
-    // play loser sound
-  }
-
-  if (gameStatePlayer2 > P2VorigLvl)
-  {
-    // play winning sound
-  }
-  else if (gameStatePlayer2 < P2VorigLvl)
-  {
-    // play loser sound
-  }
-
-  if (reachedEndPlayer1 == true)
-  {
-    // stop spel
-    // maak speler 1 winaar
-    // speel winner geluid af
-  }
-  if (reachedEndPlayer2 == true)
-  {
-    // stop spel
-    // maak speler 2 winaar
-    // speel winnaars geluid af
-  }
-  // lcd_init();
->>>>>>> efe72d5 (added an idea how the master should work)
 }
