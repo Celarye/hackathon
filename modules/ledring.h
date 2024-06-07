@@ -21,8 +21,70 @@ const byte ledSpeed[6] = {50, 40, 30, 20, 14, 7};
 bool findRandom = false;
 byte spot = 0;
 
-void setup() {
-  // put your setup code here, to run once:
+
+
+void clearLEDS() {
+  for (byte i = 0; i < NUM_LEDS; i++) {
+    leds[i].setRGB(0, 0, 0);
+  }
+}
+
+void PlayGame(byte bound1, byte bound2) {
+  leds[Position].setRGB(255, 0, 0);
+  if (Position < bound1 + 1 || Position > bound2 + 1) {
+    leds[Position - 1].setRGB(0, 0, 0);
+  }
+  FastLED.show();
+  Position++;
+  if (Position >= NUM_LEDS) {
+    leds[Position - 1].setRGB(0, 0, 0);
+    Position = 0;
+  }
+}
+
+void winner() {
+  for (byte i = 0; i < 3; i++) {
+    for (byte j = 0; j < NUM_LEDS; j++) {
+      leds[j].setRGB(0, 255, 0);
+        tone(9, 1000, 250);
+    }
+    FastLED.show();
+    delay(500);
+    clearLEDS();
+    FastLED.show();
+    delay(500);
+  
+  }
+  findRandom = true;
+  Position = 0;
+
+  gameState = level + 1;
+  if (gameState > 6) {
+    gameState = 0;
+  }
+}
+
+void loser() {
+  for (byte i = 0; i < 3; i++) {
+    for (byte j = 0; j < NUM_LEDS; j++) {
+      leds[j].setRGB(255, 0, 0);
+      tone(9, 200, 250);
+    }
+    FastLED.show();
+    delay(500);
+    clearLEDS();
+    FastLED.show();
+    delay(500);
+  }
+  gameState = 0;
+}
+
+
+void winAll(){
+  
+}
+
+void ledringSetup() {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.addLeds<WS2812B, SCORE_PIN, GRB>(sleds, SCORE_LEDS);
   pinMode(A3, INPUT_PULLUP);
@@ -30,8 +92,7 @@ void setup() {
   Serial.println("Reset");
 }
 
-void loop() {
-  // put your main code here, to run repeatedly:
+void ledringLoop() {
   FastLED.setBrightness(BRIGHTNESS );
   if (gameState == 0) {
     fill_rainbow(leds, NUM_LEDS, 0, 20); //2 = longer gradient strip
@@ -83,7 +144,7 @@ void loop() {
     }
   }
   if (gameState == 2) {
-//    period = 320;
+  //    period = 320;
     period = ledSpeed[1];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -205,59 +266,4 @@ void loop() {
     loser();
   }
 }
-void PlayGame(byte bound1, byte bound2) {
-  leds[Position].setRGB(255, 0, 0);
-  if (Position < bound1 + 1 || Position > bound2 + 1) {
-    leds[Position - 1].setRGB(0, 0, 0);
-  }
-  FastLED.show();
-  Position++;
-  if (Position >= NUM_LEDS) {
-    leds[Position - 1].setRGB(0, 0, 0);
-    Position = 0;
-  }
-}
 
-void winner() {
-  for (byte i = 0; i < 3; i++) {
-    for (byte j = 0; j < NUM_LEDS; j++) {
-      leds[j].setRGB(0, 255, 0);
-        tone(9, 1000, 250);
-    }
-    FastLED.show();
-    delay(500);
-    clearLEDS();
-    FastLED.show();
-    delay(500);
-  
-  }
-  findRandom = true;
-  Position = 0;
-
-  gameState = level + 1;
-  if (gameState > 6) {
-    gameState = 0;
-  }
-}
-void loser() {
-  for (byte i = 0; i < 3; i++) {
-    for (byte j = 0; j < NUM_LEDS; j++) {
-      leds[j].setRGB(255, 0, 0);
-      tone(9, 200, 250);
-    }
-    FastLED.show();
-    delay(500);
-    clearLEDS();
-    FastLED.show();
-    delay(500);
-  }
-  gameState = 0;
-}
-void clearLEDS() {
-  for (byte i = 0; i < NUM_LEDS; i++) {
-    leds[i].setRGB(0, 0, 0);
-  }
-}
-void winAll(){
-  
-}
