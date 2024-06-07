@@ -20,10 +20,10 @@ if u just type myDFPlayer. it will show all options
 void setup()
 {
   setupmp3();
+  ledringSetup();
 }
 
 void loop()
 {
-  myDFPlayer.play(1);
-  delay(2000);
+  ledringLoop();
 }
