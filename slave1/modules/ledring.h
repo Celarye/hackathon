@@ -79,7 +79,7 @@ void loser() {
   gameStatePlayer1 = previousGameState - 1;
 }
 
-void ledringSetup() {
+void setupLedring() {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.addLeds<WS2812B, SCORE_PIN, GRB>(sleds, SCORE_LEDS);
   pinMode(2, INPUT_PULLUP);
@@ -87,7 +87,7 @@ void ledringSetup() {
   Serial.println("Reset");
 }
 
-void ledringLoop(int playerStage) {
+void loopledring(int playerStage) {
   FastLED.setBrightness(BRIGHTNESS);
 
   // Level setup

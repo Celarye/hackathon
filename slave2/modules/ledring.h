@@ -8,8 +8,9 @@
 CRGB leds[NUM_LEDS];
 CRGB sleds[SCORE_LEDS];
 
-extern int gameStatePlayer1;
-extern bool reachedEndPlayer1;
+extern int gameStatePlayer;
+extern bool reachedEndPlayer;
+extern int playerStage;
 
 int previousGameState = 0;
 int level = 0;
@@ -57,9 +58,11 @@ void winner() {
     delay(500);
   }
   Position = 0;
-  gameStatePlayer1 = level + 1;
-  if (gameStatePlayer1 > 6) {
-    gameStatePlayer1 = 0;
+  gameStatePlayer = level + 1;
+
+  if (gameStatePlayer > 6) {
+    gameStatePlayer = 0;
+    playerStage += 1;
   }
 }
 
@@ -76,10 +79,11 @@ void loser() {
   }
   
   Serial.println(previousGameState);
-  gameStatePlayer1 = previousGameState - 1;
+  gameStatePlayer = previousGameState - 1;
+  playerStage = gameStatePlayer;
 }
 
-void ledringSetup() {
+void setupLedring() {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.addLeds<WS2812B, SCORE_PIN, GRB>(sleds, SCORE_LEDS);
   pinMode(2, INPUT_PULLUP);
@@ -87,11 +91,11 @@ void ledringSetup() {
   Serial.println("Reset");
 }
 
-void ledringLoop(int playerStage) {
+void loopledring(int playerStage) {
   FastLED.setBrightness(BRIGHTNESS);
 
   // Level setup
-  if (gameStatePlayer1 == 0) {
+  if (gameStatePlayer == 0) {
     fill_rainbow(leds, NUM_LEDS, 0, 20);
     fill_rainbow(sleds, SCORE_LEDS, 0, 40);
 
@@ -110,15 +114,15 @@ void ledringLoop(int playerStage) {
         delay(100);
         FastLED.show();
       }
-      gameStatePlayer1 = 1;
+      gameStatePlayer = 1;
     }
     FastLED.show();
   }
 
-  byte spot = staticSpots[gameStatePlayer1 - 1];
+  byte spot = staticSpots[gameStatePlayer - 1];
 
   // Level 1
-  if (gameStatePlayer1 == 1) {
+  if (gameStatePlayer == 1) {
     period = ledSpeed[0];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -130,18 +134,18 @@ void ledringLoop(int playerStage) {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
-      previousGameState = gameStatePlayer1;
+      previousGameState = gameStatePlayer;
       if (Position == spot + 2 || Position == spot || Position == spot + 1) {
-        level = gameStatePlayer1;
-        gameStatePlayer1 = 98;
+        level = gameStatePlayer;
+        gameStatePlayer = 98;
       } else {
-        gameStatePlayer1 = 99;
+        gameStatePlayer = 99;
       }
     }
   }
 
   // Level 2
-  if (gameStatePlayer1 == 2) {
+  if (gameStatePlayer == 2) {
     period = ledSpeed[1];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -153,18 +157,18 @@ void ledringLoop(int playerStage) {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
-      previousGameState = gameStatePlayer1;
+      previousGameState = gameStatePlayer;
       if (Position == spot + 2 || Position == spot || Position == spot + 1) {
-        level = gameStatePlayer1;
-        gameStatePlayer1 = 98;
+        level = gameStatePlayer;
+        gameStatePlayer = 98;
       } else {
-        gameStatePlayer1 = 99;
+        gameStatePlayer = 99;
       }
     }
   }
 
   // Level 3
-  if (gameStatePlayer1 == 3) {
+  if (gameStatePlayer == 3) {
     period = ledSpeed[2];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -174,18 +178,18 @@ void ledringLoop(int playerStage) {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
-      previousGameState = gameStatePlayer1;
+      previousGameState = gameStatePlayer;
       if (Position == spot + 1) {
-        level = gameStatePlayer1;
-        gameStatePlayer1 = 98;
+        level = gameStatePlayer;
+        gameStatePlayer = 98;
       } else {
-        gameStatePlayer1 = 99;
+        gameStatePlayer = 99;
       }
     }
   }
 
   // Level 4
-  if (gameStatePlayer1 == 4) {
+  if (gameStatePlayer == 4) {
     period = ledSpeed[3];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -195,18 +199,18 @@ void ledringLoop(int playerStage) {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
-      previousGameState = gameStatePlayer1;
+      previousGameState = gameStatePlayer;
       if (Position == spot + 1) {
-        level = gameStatePlayer1;
-        gameStatePlayer1 = 98;
+        level = gameStatePlayer;
+        gameStatePlayer = 98;
       } else {
-        gameStatePlayer1 = 99;
+        gameStatePlayer = 99;
       }
     }
   }
 
   // Level 5
-  if (gameStatePlayer1 == 5) {
+  if (gameStatePlayer == 5) {
     period = ledSpeed[4];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -216,18 +220,18 @@ void ledringLoop(int playerStage) {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
-      previousGameState = gameStatePlayer1;
+      previousGameState = gameStatePlayer;
       if (Position == spot + 1) {
-        level = gameStatePlayer1;
-        gameStatePlayer1 = 98;
+        level = gameStatePlayer;
+        gameStatePlayer = 98;
       } else {
-        gameStatePlayer1 = 99;
+        gameStatePlayer = 99;
       }
     }
   }
 
   // Level 6
-  if (gameStatePlayer1 == 6) {
+  if (gameStatePlayer == 6) {
     period = ledSpeed[5];
     if (millis() > time_now + period) {
       time_now = millis();
@@ -237,21 +241,21 @@ void ledringLoop(int playerStage) {
     }
     if (digitalRead(2) == LOW) {
       delay(300);
-      previousGameState = gameStatePlayer1;
+      previousGameState = gameStatePlayer;
       if (Position == spot + 1) {
-        level = gameStatePlayer1;
-        gameStatePlayer1 = 98;
-        reachedEndPlayer1 = true;
+        level = gameStatePlayer;
+        gameStatePlayer = 98;
+        reachedEndPlayer = true;
       } else {
-        gameStatePlayer1 = 99;
+        gameStatePlayer = 99;
       }
     }
   }
 
-  if (gameStatePlayer1 == 98) {
+  if (gameStatePlayer == 98) {
     winner();
   }
-  if (gameStatePlayer1 == 99) {
+  if (gameStatePlayer == 99) {
     loser();
   }
 }
