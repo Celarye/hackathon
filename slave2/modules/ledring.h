@@ -8,13 +8,6 @@
 CRGB leds[NUM_LEDS];
 CRGB sleds[SCORE_LEDS];
 
-extern int gameStatePlayer;
-extern bool reachedEndPlayer;
-extern int playerStage;
-
-int previousGameState = 0;
-int level = 0;
-
 int period = 1000;
 unsigned long time_now = 0;
 int Position = 0;
@@ -22,7 +15,6 @@ int Position = 0;
 const int ledSpeed[6] = {50, 40, 30, 20, 14, 7};
 
 const int staticSpots[6] = {3, 5, 7, 9, 11, 13};
-
 
 
 void clearLEDS() {
@@ -46,42 +38,6 @@ void PlayGame(byte bound1, byte bound2) {
   }
 }
 
-void winner() {
-  for (byte i = 0; i < 3; i++) {
-    for (byte j = 0; j < NUM_LEDS; j++) {
-      leds[j] = CRGB::Green;
-      tone(9, 1000, 250);
-    }
-    FastLED.show();
-    delay(500);
-    clearLEDS();
-    delay(500);
-  }
-  Position = 0;
-  gameStatePlayer = level + 1;
-
-  if (gameStatePlayer > 6) {
-    gameStatePlayer = 0;
-    playerStage += 1;
-  }
-}
-
-void loser() {
-  for (byte i = 0; i < 3; i++) {
-    for (byte j = 0; j < NUM_LEDS; j++) {
-      leds[j] = CRGB::Red;
-      tone(9, 200, 250);
-    }
-    FastLED.show();
-    delay(500);
-    clearLEDS();
-    delay(500);
-  }
-  
-  Serial.println(previousGameState);
-  gameStatePlayer = previousGameState - 1;
-  playerStage = gameStatePlayer;
-}
 
 void setupLedring() {
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
@@ -91,7 +47,7 @@ void setupLedring() {
   Serial.println("Reset");
 }
 
-void loopledring(int playerStage) {
+int loopledring(int gameStatePlayer) {
   FastLED.setBrightness(BRIGHTNESS);
 
   // Level setup
@@ -114,7 +70,7 @@ void loopledring(int playerStage) {
         delay(100);
         FastLED.show();
       }
-      gameStatePlayer = 1;
+      return 1;
     }
     FastLED.show();
   }
@@ -133,13 +89,11 @@ void loopledring(int playerStage) {
       PlayGame(spot + 1, spot + 2);
     }
     if (digitalRead(2) == LOW) {
-      delay(300);
-      previousGameState = gameStatePlayer;
+      // delay(300);
       if (Position == spot + 2 || Position == spot || Position == spot + 1) {
-        level = gameStatePlayer;
-        gameStatePlayer = 98;
+        return 1;
       } else {
-        gameStatePlayer = 99;
+        return -1;
       }
     }
   }
@@ -156,13 +110,11 @@ void loopledring(int playerStage) {
       PlayGame(spot + 1, spot + 2);
     }
     if (digitalRead(2) == LOW) {
-      delay(300);
-      previousGameState = gameStatePlayer;
+      // delay(300);
       if (Position == spot + 2 || Position == spot || Position == spot + 1) {
-        level = gameStatePlayer;
-        gameStatePlayer = 98;
+        return 1;
       } else {
-        gameStatePlayer = 99;
+        return -1;
       }
     }
   }
@@ -177,13 +129,11 @@ void loopledring(int playerStage) {
       PlayGame(spot + 1, spot + 1);
     }
     if (digitalRead(2) == LOW) {
-      delay(300);
-      previousGameState = gameStatePlayer;
+      // delay(300);
       if (Position == spot + 1) {
-        level = gameStatePlayer;
-        gameStatePlayer = 98;
+        return 1;
       } else {
-        gameStatePlayer = 99;
+        return -1;
       }
     }
   }
@@ -198,13 +148,11 @@ void loopledring(int playerStage) {
       PlayGame(spot + 1, spot + 1);
     }
     if (digitalRead(2) == LOW) {
-      delay(300);
-      previousGameState = gameStatePlayer;
+      // delay(300);
       if (Position == spot + 1) {
-        level = gameStatePlayer;
-        gameStatePlayer = 98;
+        return 1;
       } else {
-        gameStatePlayer = 99;
+        return -1;
       }
     }
   }
@@ -219,13 +167,11 @@ void loopledring(int playerStage) {
       PlayGame(spot + 1, spot + 1);
     }
     if (digitalRead(2) == LOW) {
-      delay(300);
-      previousGameState = gameStatePlayer;
+      // delay(300);
       if (Position == spot + 1) {
-        level = gameStatePlayer;
-        gameStatePlayer = 98;
+        return 1;
       } else {
-        gameStatePlayer = 99;
+        return -1;
       }
     }
   }
@@ -240,22 +186,12 @@ void loopledring(int playerStage) {
       PlayGame(spot + 1, spot + 1);
     }
     if (digitalRead(2) == LOW) {
-      delay(300);
-      previousGameState = gameStatePlayer;
+      // delay(300);
       if (Position == spot + 1) {
-        level = gameStatePlayer;
-        gameStatePlayer = 98;
-        reachedEndPlayer = true;
+        return 1;
       } else {
-        gameStatePlayer = 99;
+        return -1;
       }
     }
-  }
-
-  if (gameStatePlayer == 98) {
-    winner();
-  }
-  if (gameStatePlayer == 99) {
-    loser();
   }
 }
