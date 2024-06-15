@@ -1,7 +1,7 @@
 #include "DFRobotDFPlayerMini.h"
 
 #include <SoftwareSerial.h>
-SoftwareSerial softSerial(/*rx =*/10, /*tx =*/11);
+SoftwareSerial softSerial(/*rx =*/7, /*tx =*/8);
 #define FPSerial softSerial
 
 DFRobotDFPlayerMini myDFPlayer;
@@ -10,7 +10,6 @@ void printDetail(uint8_t type, int value);
 void setupmp3()
 {
   FPSerial.begin(9600);
-  Serial.begin(115200);
   Serial.println(F("Initializing DFPlayer ... (May take 3~5 seconds)"));
 
   if (!myDFPlayer.begin(FPSerial, /*isACK = */ true, /*doReset = */ true))
