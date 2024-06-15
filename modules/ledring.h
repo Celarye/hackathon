@@ -1,1 +1,0 @@
-void ledring_init() {}

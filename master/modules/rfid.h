@@ -41,9 +41,19 @@
 #define RST_PIN         9          // Configurable, see typical pin layout above
 #define SS_PIN          10         // Configurable, see typical pin layout above
 
+String users[4][2] = {
+	{"33826aee", "JENTE"},
+    {"43f59218", "JELLE"},
+    {"63f18418", "CAIO"},
+    {"43d29118", "EDUARD"}
+};
+
+String names[2];
+
+
 MFRC522 mfrc522(SS_PIN, RST_PIN);  // Create MFRC522 instance
 
-void rfidFunctionSetup() {
+void rfidSetup() {
 	Serial.begin(9600);		// Initialize serial communications with the PC
 	while (!Serial);		// Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
 	SPI.begin();			// Init SPI bus
@@ -53,7 +63,7 @@ void rfidFunctionSetup() {
 	Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
 }
 
-String rfidFunction() {
+String rfidLoop() {
 	// Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
 	if ( ! mfrc522.PICC_IsNewCardPresent()) {
 		return "NO CARD";
@@ -78,4 +88,51 @@ String rfidFunction() {
 
 	
 	
+}
+
+
+String* getUID(){
+
+
+	boolean second = false;
+    String user = rfidLoop();
+
+
+        if (user != "NO CARD")
+        {
+            for (int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
+            {
+                if (user == users[i][0])
+                {
+                    names[0] = users[i][0];
+					Serial.println(users[i][0]);
+					second = true;
+                }
+                
+            }
+            
+        }
+
+		if (second)
+		{
+			if (user != "NO CARD")
+        {
+            for (int i = 0; i < sizeof(users)/sizeof(users[0]); i++)
+            {
+                if (user == users[i][0])
+                {
+                    names[1] = users[i][0];
+					Serial.println(users[i][0]);
+                }
+                
+            }
+            
+        }
+		}
+		
+
+	return names;
+        
+    
+    
 }
