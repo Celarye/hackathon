@@ -1,3 +1,5 @@
+#include "modules/remote.h"
+#include "modules/rfid.h"
 #include "modules/lcd.h"
 #include "modules/mp3_player.h"
 /* all sounds used for games (so far)
@@ -15,26 +17,19 @@ bv:
 myDFPlayer.play(sound u want in number: 1, 2...)
 if u just type myDFPlayer. it will show all options
 */
+  
+byte remoteResult;
+String* rfidResult;
 
-
-// houd het current level bij van de speler
 int gameStatePlayer1 = 0;
 int gameStatePlayer2 = 0;
 
 int gameStateChangePlayer1;
 int gameStateChangePlayer2;
 
-void gameStagePlayer(int player, int gameStateChange)
-{
-  
-  
-
-  
-  
-}
-
 void setup()
 {
+  rfidSetup();
   setupmp3();
 }
 
