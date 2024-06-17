@@ -1,1 +1,3 @@
-void lcd_init() {}
+void lcdSetup() {}
+
+void lcdRefresh() {}

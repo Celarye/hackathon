@@ -28,9 +28,11 @@ int gameStateChangePlayer2 = 0;
 
 void setup()
 {
+  i2cSetup();
+  remoteSetup();
   rfidSetup();
-  setupmp3();
-  setupI2c();
+  mp3Setup();
+  lcdSetup();
   Serial.begin(9600);
 }
 
@@ -44,39 +46,56 @@ void loop()
     {
       player[i] = rfidLoop();
     }
+    lcdRefresh();
+    myDFPlayer.play(6);
     sendI2c(gameState);
     break;
   case 1:
+    switch (gameStateChangePlayer1)
+    {
+    case 1:
+      gameStatePlayer1++;
+      break;
+    case -1:
+      gameStatePlayer1--;
+      break;
+    case 0:
+      break;
+    }
+
+    switch (gameStateChangePlayer2)
+    {
+    case 1:
+      gameStatePlayer2++;
+      break;
+    case -1:
+      gameStatePlayer2--;
+      break;
+    case 0:
+      break;
+    }
+
+    switch (gameStateChangePlayer1 || gameStateChangePlayer2)
+    {
+    case 7:
+      gameState = 2;
+      break;
+
+    default:
+      myDFPlayer.play(gameStateChangePlayer1);
+      gameStateChangePlayer1 = 0;
+
+      myDFPlayer.play(gameStateChangePlayer2);
+      gameStateChangePlayer2 = 0;
+
+      lcdRefresh();
+      break;
+    }
+
+    break;
+  case 2:
+    lcdRefresh();
+    myDFPlayer.play(8);
     break;
   }
-
-  switch (gameStateChangePlayer1)
-  {
-  case 1:
-    gameStatePlayer1++;
-    break;
-  case -1:
-    gameStatePlayer1--;
-    break;
-  case 0:
-    break;
-  }
-
-  myDFPlayer.play(gameStateChangePlayer1);
-  gameStateChangePlayer1 = 0;
-
-  switch (gameStateChangePlayer2)
-  {
-  case 1:
-    gameStatePlayer2++;
-    break;
-  case -1:
-    gameStatePlayer2--;
-    break;
-  case 0:
-    break;
-  }
-
-  myDFPlayer.play(gameStateChangePlayer2);
-  gameStateChangePlayer2 = 0;
 }
