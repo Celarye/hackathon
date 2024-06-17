@@ -4,7 +4,6 @@ int RECV_PIN = 2;
 IRrecv irrecv(RECV_PIN);
 
 decode_results results;
-int result;
 
 void remoteSetup()
 {
@@ -14,53 +13,29 @@ void remoteSetup()
 
 int remoteLoop()
 {
-  while (!result)
+  while (true)
   {
+    Serial.println("Remote Loop");
     if (irrecv.decode(&results))
     {
-
       Serial.print("Received value: ");
       Serial.println(results.value, HEX);
 
       switch (results.value)
       {
-      case 0xff6897:
-        result = 1;
+      case 0x1BC0157B:
+        Serial.println("Remote-detected: RESTART");
+        irrecv.resume();
+        return 0;
+      case 0xC101E57B:
         Serial.println("Remote-detected: ON");
-        break;
-
-      case 0xff9867:
-        result = 2;
-        Serial.println("Remote-detected: RESET");
-        break;
-
-      case 0xffb04f:
-        result = 3;
-        Serial.println("Remote-detected: BLAUW");
-        break;
-
-      case 0xff30cf:
-        result = 4;
-        Serial.println("Remote-detected: GEEL");
-        break;
-
-      case 0xff18e7:
-        result = 5;
-        Serial.println("Remote-detected: PAARS");
-        break;
-
-      case 0xff7a85:
-        result = 6;
-        Serial.println("Remote-detected: WIT");
-        break;
+        irrecv.resume();
+        return 1;
 
       default:
-        Serial.println(results.value, HEX);
+        irrecv.resume();
         break;
       }
-
-      return result;
-      irrecv.resume();
     }
   }
 }
