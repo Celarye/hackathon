@@ -47,15 +47,14 @@ String users[4][2] = {
 		{"63f18418", "CAIO"},
 		{"43d29118", "EDUARD"}};
 
-String names[2];
+String userid;
+String userName;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
 void rfidSetup()
 {
-	Serial.begin(9600); // Initialize serial communications with the PC
-	while (!Serial)
-		;																 // Do nothing if no serial port is opened (added for Arduinos based on ATMEGA32U4)
+	Serial.begin(9600);
 	SPI.begin();											 // Init SPI bus
 	mfrc522.PCD_Init();								 // Init MFRC522
 	delay(4);													 // Optional delay. Some board do need more time after init to be ready, see Readme
@@ -63,40 +62,35 @@ void rfidSetup()
 	Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
 }
 
-String rfidGetPlayer()
+String rfidLoop()
 {
-	// Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
-	if (!mfrc522.PICC_IsNewCardPresent())
+	userName = "";
+	while (userName == "")
 	{
-		return "UNKNOWN";
-	}
+		Serial.println("RIFD Loop");
 
-	// Select one of the cards
-	if (!mfrc522.PICC_ReadCardSerial())
-	{
-		return "UNKNOWN";
-	}
-
-	String userid;
-	String userName;
-
-	for (byte i = 0; i < mfrc522.uid.size; i++)
-	{
-		userid += String(mfrc522.uid.uidByte[i], HEX);
-	}
-	
-	for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
+		if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
 		{
-			if (userid == users[i][0])
+			Serial.print("Card scanned: ");
+			for (byte i = 0; i < mfrc522.uid.size; i++)
 			{
-				userName = users[i][1];
-				Serial.println(userName);
+				userid += String(mfrc522.uid.uidByte[i], HEX);
 			}
-			else{
-				userName = "UNKNOWN";
+
+			for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
+			{
+				if (userid == users[i][0])
+				{
+					userName = users[i][1];
+					Serial.println(userName);
+				}
+				else
+				{
+					userName = "UNKNOWN";
+				}
 			}
+
+			return userName;
 		}
-
-
-	return userName;
+	}
 }

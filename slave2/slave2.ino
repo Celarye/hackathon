@@ -6,9 +6,9 @@ int gameStatePlayer = 0;
 
 void setup()
 {
+    Serial.begin(9600);
     ledringSetup();
     i2cSetup();
-    Serial.begin(9600);
 }
 
 void loop()

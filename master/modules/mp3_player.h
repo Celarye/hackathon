@@ -9,6 +9,7 @@ void printDetail(uint8_t type, int value);
 
 void mp3Setup()
 {
+  Serial.begin(9600);
   FPSerial.begin(9600);
   Serial.println(F("Initializing DFPlayer ... (May take 3~5 seconds)"));
 
