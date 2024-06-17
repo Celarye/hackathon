@@ -1,6 +1,6 @@
 #include "modules/i2c.h"
 #include "modules/remote.h"
-#include "modules/rfid.h"
+// #include "modules/rfid.h"
 #include "modules/lcd.h"
 #include "modules/mp3_player.h"
 /* All sounds used for games:
@@ -31,7 +31,7 @@ void setup()
   Serial.begin(9600);
   i2cSetup();
   remoteSetup();
-  rfidSetup();
+  // rfidSetup();
   mp3Setup();
   lcdSetup();
 }
@@ -42,11 +42,11 @@ void loop()
   {
   case 0:
     gameState = remoteLoop();
-    for (int i = 0; i < 2; i++)
-    {
-      player[i] = rfidLoop();
-      delay(5000);
-    }
+    // for (int i = 0; i < 2; i++)
+    // {
+    //   player[i] = rfidLoop();
+    //   delay(5000);
+    // }
     lcdRefresh();
     myDFPlayer.play(6);
     i2cSend(gameState);

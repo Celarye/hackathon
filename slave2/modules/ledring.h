@@ -83,10 +83,12 @@ int ledringLoop(int gameStatePlayer)
           delay(100);
           FastLED.show();
         }
-        return 1;
+        break;
       }
       FastLED.show();
     }
+
+    return 11;
   }
 
   byte spot = staticSpots[gameStatePlayer - 1];
@@ -108,15 +110,17 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        if (Position == spot + 2 || Position == spot + 1 || Position == spot)
-        {
-          return 1;
-        }
-        else
-        {
-          return -1;
-        }
+        break;
       }
+    }
+
+    if (Position == spot + 2 || Position == spot + 1 || Position == spot)
+    {
+      return 11;
+    }
+    else
+    {
+      return -11;
     }
   }
 
@@ -137,15 +141,17 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        if (Position == spot + 2 || Position == spot || Position == spot + 1)
-        {
-          return 1;
-        }
-        else
-        {
-          return -1;
-        }
+        break;
       }
+    }
+
+    if (Position == spot + 2 || Position == spot || Position == spot + 1)
+    {
+      return 11;
+    }
+    else
+    {
+      return -11;
     }
   }
 
@@ -164,15 +170,17 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        if (Position == spot + 1)
-        {
-          return 1;
-        }
-        else
-        {
-          return -1;
-        }
+        break;
       }
+    }
+
+    if (Position == spot + 1)
+    {
+      return 11;
+    }
+    else
+    {
+      return -11;
     }
   }
 
@@ -191,15 +199,17 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        if (Position == spot + 1)
-        {
-          return 1;
-        }
-        else
-        {
-          return -1;
-        }
+        break;
       }
+    }
+
+    if (Position == spot + 1)
+    {
+      return 11;
+    }
+    else
+    {
+      return -11;
     }
   }
 
@@ -218,15 +228,17 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        if (Position == spot + 1)
-        {
-          return 1;
-        }
-        else
-        {
-          return -1;
-        }
+        break;
       }
+    }
+
+    if (Position == spot + 1)
+    {
+      return 11;
+    }
+    else
+    {
+      return -11;
     }
   }
 
@@ -245,15 +257,17 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        if (Position == spot + 1)
-        {
-          return 1;
-        }
-        else
-        {
-          return -1;
-        }
+        break;
       }
+    }
+
+    if (Position == spot + 1)
+    {
+      return 11;
+    }
+    else
+    {
+      return -11;
     }
   }
 }
