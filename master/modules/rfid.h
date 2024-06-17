@@ -63,65 +63,40 @@ void rfidSetup()
 	Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
 }
 
-String rfidLoop()
+String rfidGetPlayer()
 {
 	// Reset the loop if no new card present on the sensor/reader. This saves the entire process when idle.
 	if (!mfrc522.PICC_IsNewCardPresent())
 	{
-		return "NO CARD";
+		return "UNKNOWN";
 	}
 
 	// Select one of the cards
 	if (!mfrc522.PICC_ReadCardSerial())
 	{
-		return;
+		return "UNKNOWN";
 	}
 
 	String userid;
+	String userName;
 
 	for (byte i = 0; i < mfrc522.uid.size; i++)
 	{
 		userid += String(mfrc522.uid.uidByte[i], HEX);
 	}
-
-	// Serial.println(userid);
-	return userid;
-	delay(100);
-}
-
-String *getUID()
-{
-
-	boolean second = false;
-	String user = rfidLoop();
-
-	if (user != "NO CARD")
-	{
-		for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
+	
+	for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
 		{
-			if (user == users[i][0])
+			if (userid == users[i][0])
 			{
-				names[0] = users[i][0];
-				Serial.println(users[i][0]);
-				second = true;
+				userName = users[i][1];
+				Serial.println(userName);
+			}
+			else{
+				userName = "UNKNOWN";
 			}
 		}
-	}
 
-	if (second)
-	{
-		if (user != "NO CARD")
-		{
-			for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
-			{
-				if (user == users[i][0])
-				{
-					names[1] = users[i][0];
-					Serial.println(users[i][0]);
-				}
-			}
-		}
-	}
 
-	return names;
+	return userName;
 }
