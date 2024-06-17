@@ -7,7 +7,7 @@ int gameStateChangePlayer;
 extern int gameStateChangePlayer1;
 extern int gameStateChangePlayer2;
 
-void receiveI2c(int data)
+void i2cReceive(int data)
 {
   gameStateChangePlayer = Wire.read();
 
@@ -47,10 +47,10 @@ void receiveI2c(int data)
 void i2cSetup()
 {
   Wire.begin(masterAddress);
-  Wire.onReceive(receiveI2c);
+  Wire.onReceive(i2cReceive);
 }
 
-void sendI2c(int data)
+void i2cSend(int data)
 {
   for (const byte &slaveAddress : slaveAddresses)
   {

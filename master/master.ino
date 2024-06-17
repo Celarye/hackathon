@@ -48,7 +48,7 @@ void loop()
     }
     lcdRefresh();
     myDFPlayer.play(6);
-    sendI2c(gameState);
+    i2cSend(gameState);
     break;
   case 1:
     switch (gameStateChangePlayer1)
@@ -96,6 +96,7 @@ void loop()
   case 2:
     lcdRefresh();
     myDFPlayer.play(8);
+    i2cSend(gameState);
     break;
   }
 }
