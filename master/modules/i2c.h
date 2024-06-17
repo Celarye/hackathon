@@ -1,15 +1,52 @@
 #include <Wire.h>
 
 byte masterAddress = 0x0A;
-byte slaveAddresses[] = {0x0B, 0x0C};
+byte slaveAddresses[2] = {0x0B, 0x0C};
 
-int gameStatePlayerChange;
-extern int gameStatePlayerChange1;
-extern int gameStatePlayerChange2;
+int gameStateChangePlayer;
+extern int gameStateChangePlayer1;
+extern int gameStateChangePlayer2;
 
-void setupI2c()
+void receiveI2c(int data)
 {
-  Wire.begin(0x0A);
+  gameStateChangePlayer = Wire.read();
+
+  switch (gameStateChangePlayer)
+  {
+  case -1:
+    gameStateChangePlayer1 = 1;
+    break;
+  case 1:
+    switch (gameStateChangePlayer1)
+    {
+    case 1:
+      break;
+
+    default:
+      gameStateChangePlayer1 = -1;
+      break;
+    }
+    break;
+  case -11:
+    switch (gameStateChangePlayer2)
+    {
+    case 1:
+      break;
+
+    default:
+      gameStateChangePlayer = -1;
+      break;
+    }
+    break;
+  case 11:
+    gameStateChangePlayer = 1;
+    break;
+  }
+}
+
+void i2cSetup()
+{
+  Wire.begin(masterAddress);
   Wire.onReceive(receiveI2c);
 }
 
@@ -20,26 +57,5 @@ void sendI2c(int data)
     Wire.beginTransmission(slaveAddress);
     Wire.write(data);
     Wire.endTransmission();
-  }
-}
-
-void receiveI2c(int data)
-{
-  gameStatePlayerChange = Wire.read();
-
-  switch (gameStatePlayerChange)
-  {
-  case -1:
-    gameStatePlayerChange1 = 1;
-    break;
-  case 1:
-    gameStatePlayerChange1 = -1;
-    break;
-  case -11:
-    gameStatePlayerChange2 = -1;
-    break;
-  case 11:
-    gameStatePlayerChange2 = 1;
-    break;
   }
 }
