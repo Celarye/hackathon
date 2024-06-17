@@ -1,25 +1,23 @@
 #include <Wire.h>
 
-
 extern int gameState;
 byte masterAddress = 0x0A;
 byte slaveAddress = 0x0C;
 
-void setupI2c()
+void i2cReceive(int data)
 {
-    Wire.begin(slaveAddress);
-    Wire.onReceive(receiveI2c);
-    // Serial.begin(9600);
+    gameState = Wire.read();
 }
 
-void sendI2c(int data)
+void i2cSetup()
+{
+    Wire.begin(slaveAddress);
+    Wire.onReceive(i2cReceive);
+}
+
+void i2cSend(int data)
 {
     Wire.beginTransmission(masterAddress);
     Wire.write(data);
     Wire.endTransmission();
-}
-
-void receiveI2c(int data)
-{
-    gameState = Wire.read();
 }
