@@ -44,7 +44,7 @@ void loop()
     gameState = remoteLoop();
     for (int i = 0; i < 2; i++)
     {
-      player[i] = rfidLoop();
+      player[i] = rfidGetPlayer();
     }
     lcdRefresh();
     myDFPlayer.play(6);
