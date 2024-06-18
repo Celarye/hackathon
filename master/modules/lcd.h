@@ -23,15 +23,42 @@ void lcdRefresh(int gameState, int player1Level, int player2Level, String player
   switch (gameState)
   {
   case 0:
-    /* code */
     break;
-
   case 1:
-    /* code */
+    lcd.setCursor(0, 1);
+    lcd.print("Level ");
+    lcd.setCursor(7, 1);
+    lcd.print(player1Level);
+    lcd.setCursor(0, 2);
+    lcd.print(0, 3);
+    lcd.print("Level ");
+    lcd.setCursor(7, 3);
+    lcd.print(player2Level);
     break;
 
   case 2:
-    /* code */
+    lcd.setCursor(0, 1);
+    switch (player1Level)
+    {
+    case 7:
+      lcd.print("WINNER");
+      break;
+
+    default:
+      lcd.print("LOSER");
+      break;
+    }
+    lcd.setCursor(0, 3);
+    switch (player2Level)
+    {
+    case 7:
+      lcd.print("WINNER");
+      break;
+
+    default:
+      lcd.print("LOSER");
+      break;
+    }
     break;
   }
 }
