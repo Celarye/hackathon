@@ -10,15 +10,19 @@ void i2cReceive(int data)
 {
   int playerLevel = Wire.read();
 
-  if (0 <= playerLevel <= 7)
+  if (playerLevel <= 7)
   {
     player1Level = playerLevel;
-    Serial.println("player1Level update received from slave 1: " + player1Level);
+    Serial.print("player1Level update received from slave 1: ");
+    Serial.println(player1Level);
   }
-  else
+  else if (10 >= playerLevel)
   {
-    player2Level = playerLevel;
-    Serial.println("player2Level update received from slave 2: " + player2Level);
+    int correctPlayerLevel = playerLevel - 10;
+
+    player2Level = correctPlayerLevel;
+    Serial.print("player2Level update received from slave 2: ");
+    Serial.println(correctPlayerLevel);
   }
 }
 
@@ -39,5 +43,6 @@ void i2cSend(int data)
     Wire.endTransmission();
   }
 
-  Serial.println("Send out gameState to slaves: " + data);
+  Serial.print("Sending out gameState value to slaves: ");
+  Serial.println(data);
 }

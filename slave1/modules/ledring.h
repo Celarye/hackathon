@@ -83,10 +83,9 @@ int ledringLoop(int playerLevel)
           delay(100);
           FastLED.show();
         }
+        return 1;
       }
       FastLED.show();
-
-      return 1;
     }
   }
 
@@ -109,6 +108,7 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
+        delay(300);
         if (Position == spot + 2 || Position == spot + 1 || Position == spot)
         {
           return 1;
@@ -126,7 +126,7 @@ int ledringLoop(int playerLevel)
   {
     while (true)
     {
-      period = ledSpeed[1];
+      period = ledSpeed[0];
       if (millis() > time_now + period)
       {
         time_now = millis();
@@ -138,6 +138,7 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
+        delay(300);
         if (Position == spot + 2 || Position == spot || Position == spot + 1)
         {
           return 1;
@@ -155,7 +156,7 @@ int ledringLoop(int playerLevel)
   {
     while (true)
     {
-      period = ledSpeed[2];
+      period = ledSpeed[0];
       if (millis() > time_now + period)
       {
         time_now = millis();
@@ -165,6 +166,7 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
+        delay(300);
         if (Position == spot + 1)
         {
           return 1;
@@ -182,7 +184,7 @@ int ledringLoop(int playerLevel)
   {
     while (true)
     {
-      period = ledSpeed[3];
+      period = ledSpeed[0];
       if (millis() > time_now + period)
       {
         time_now = millis();
@@ -192,6 +194,7 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
+        delay(300);
         if (Position == spot + 1)
         {
           return 1;
@@ -209,7 +212,7 @@ int ledringLoop(int playerLevel)
   {
     while (true)
     {
-      period = ledSpeed[4];
+      period = ledSpeed[0];
       if (millis() > time_now + period)
       {
         time_now = millis();
@@ -219,6 +222,7 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
+        delay(300);
         if (Position == spot + 1)
         {
           return 1;
@@ -236,7 +240,7 @@ int ledringLoop(int playerLevel)
   {
     while (true)
     {
-      period = ledSpeed[5];
+      period = ledSpeed[0];
       if (millis() > time_now + period)
       {
         time_now = millis();
@@ -246,6 +250,7 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
+        delay(300);
         if (Position == spot + 1)
         {
           return 1;

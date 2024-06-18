@@ -16,6 +16,15 @@ void playerLevelChange(int result)
     switch (playerLevel)
     {
     case 1:
+        switch (result)
+        {
+        case 0:
+            break;
+
+        case 1:
+            playerLevel = 2;
+            break;
+        }
         break;
 
     default:
