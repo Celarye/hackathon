@@ -16,7 +16,7 @@ const int ledSpeed[6] = {50, 40, 30, 20, 14, 7};
 
 const int staticSpots[6] = {3, 5, 7, 9, 11, 13};
 
-void clearLEDS()
+void clearLeds()
 {
   for (byte i = 0; i < NUM_LEDS; i++)
   {
@@ -31,7 +31,7 @@ void ledringSetup()
   FastLED.addLeds<WS2812B, DATA_PIN, GRB>(leds, NUM_LEDS);
   FastLED.addLeds<WS2812B, SCORE_PIN, GRB>(sleds, SCORE_LEDS);
   pinMode(2, INPUT_PULLUP);
-  Serial.println("Reset");
+  clearLeds();
 }
 
 void PlayGame(byte bound1, byte bound2)
@@ -53,12 +53,12 @@ void PlayGame(byte bound1, byte bound2)
   }
 }
 
-int ledringLoop(int gameStatePlayer)
+int ledringLoop(int playerLevel)
 {
   FastLED.setBrightness(BRIGHTNESS);
 
   // Level setup
-  if (gameStatePlayer == 0)
+  if (playerLevel == 0)
   {
     while (true)
     {
@@ -83,18 +83,17 @@ int ledringLoop(int gameStatePlayer)
           delay(100);
           FastLED.show();
         }
-        break;
       }
       FastLED.show();
-    }
 
-    return 1;
+      return 1;
+    }
   }
 
-  byte spot = staticSpots[gameStatePlayer - 1];
+  byte spot = staticSpots[playerLevel - 1];
 
   // Level 1
-  if (gameStatePlayer == 1)
+  if (playerLevel == 1)
   {
     while (true)
     {
@@ -110,22 +109,20 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        break;
+        if (Position == spot + 2 || Position == spot + 1 || Position == spot)
+        {
+          return 1;
+        }
+        else
+        {
+          return -1;
+        }
       }
-    }
-
-    if (Position == spot + 2 || Position == spot + 1 || Position == spot)
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
     }
   }
 
   // Level 2
-  if (gameStatePlayer == 2)
+  if (playerLevel == 2)
   {
     while (true)
     {
@@ -141,22 +138,20 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        break;
+        if (Position == spot + 2 || Position == spot || Position == spot + 1)
+        {
+          return 1;
+        }
+        else
+        {
+          return -1;
+        }
       }
-    }
-
-    if (Position == spot + 2 || Position == spot || Position == spot + 1)
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
     }
   }
 
   // Level 3
-  if (gameStatePlayer == 3)
+  if (playerLevel == 3)
   {
     while (true)
     {
@@ -170,22 +165,20 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        break;
+        if (Position == spot + 1)
+        {
+          return 1;
+        }
+        else
+        {
+          return -1;
+        }
       }
-    }
-
-    if (Position == spot + 1)
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
     }
   }
 
   // Level 4
-  if (gameStatePlayer == 4)
+  if (playerLevel == 4)
   {
     while (true)
     {
@@ -199,22 +192,20 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        break;
+        if (Position == spot + 1)
+        {
+          return 1;
+        }
+        else
+        {
+          return -1;
+        }
       }
-    }
-
-    if (Position == spot + 1)
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
     }
   }
 
   // Level 5
-  if (gameStatePlayer == 5)
+  if (playerLevel == 5)
   {
     while (true)
     {
@@ -228,22 +219,20 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        break;
+        if (Position == spot + 1)
+        {
+          return 1;
+        }
+        else
+        {
+          return -1;
+        }
       }
-    }
-
-    if (Position == spot + 1)
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
     }
   }
 
   // Level 6
-  if (gameStatePlayer == 6)
+  if (playerLevel == 6)
   {
     while (true)
     {
@@ -257,17 +246,15 @@ int ledringLoop(int gameStatePlayer)
       }
       if (digitalRead(2) == LOW)
       {
-        break;
+        if (Position == spot + 1)
+        {
+          return 1;
+        }
+        else
+        {
+          return -1;
+        }
       }
-    }
-
-    if (Position == spot + 1)
-    {
-      return 1;
-    }
-    else
-    {
-      return -1;
     }
   }
 }
