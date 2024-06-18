@@ -1,21 +1,22 @@
-#include <LiquidCrystal.h>
+#include "LiquidCrystal.h"
 
 // initialize the library by associating any needed LCD interface pin
 // with the arduino pin number it is connected to
-const int rs = 6, en = 0, d4 = 1, d5 = 3, d6 = 4, d7 = 5;
+const int rs = 6, en = 5, d4 = 4, d5 = 3, d6 = 1, d7 = 0;
 LiquidCrystal lcd(rs, en, d4, d5, d6, d7);
 
 void lcdSetup()
 {
-  pinMode(10, INPUT);
-  // set up the LCD's number of columns and rows:
+  pinMode(A0, INPUT);
   lcd.begin(20, 4);
-  // Print a message to the LCD.
+
+  lcd.setCursor(0, 0);
   lcd.print("Speler 1:");
 
   lcd.setCursor(0, 2);
-  // Print a message to the LCD.
   lcd.print("Speler 2:");
+
+  Serial.println("LCD setup succeeded");
 }
 
 void lcdRefresh(int gameState, int player1Level, int player2Level, String player1Name, String player2Name)

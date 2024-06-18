@@ -83,7 +83,7 @@ void loop()
     //   delay(3000);
     // }
 
-    lcdRefresh();
+    lcdRefresh(gameState, player1Level, player2Level, "", "");
     myDFPlayer.play(3);
     Serial.println("Game start sound played");
 
@@ -104,16 +104,18 @@ void loop()
     default:
       switch (playerLevelChange(player1OldLevel, player1Level))
       {
+      case 0:
+        break;
       case 1:
         myDFPlayer.play(playerLevelChange(player1OldLevel, player1Level));
         Serial.println("Player 1 round result sound played");
-        lcdRefresh();
+        lcdRefresh(gameState, player1Level, player2Level, "", "");
         break;
 
       case 2:
         myDFPlayer.play(playerLevelChange(player1OldLevel, player1Level));
         Serial.println("Player 1 round result sound played");
-        lcdRefresh();
+        lcdRefresh(gameState, player1Level, player2Level, "", "");
         break;
       }
       break;
@@ -131,13 +133,13 @@ void loop()
     default:
       myDFPlayer.play(playerLevelChange(player2OldLevel, player2Level));
       Serial.println("Player 2 round result sound played");
-      lcdRefresh();
+      lcdRefresh(gameState, player1Level, player2Level, "", "");
       break;
     }
 
     break;
   case 2:
-    lcdRefresh();
+    lcdRefresh(gameState, player1Level, player2Level, "", "");
     myDFPlayer.play(4);
     Serial.println("Game end sound played");
     i2cSend(gameState);
