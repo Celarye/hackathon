@@ -1,8 +1,10 @@
 #include <Wire.h>
 
 extern int gameState;
+extern int playerLevel;
+
 byte masterAddress = 0x0A;
-byte slaveAddress = 0x0B;
+byte slave1Address = 0x0B;
 
 void i2cReceive(int data)
 {
@@ -11,7 +13,7 @@ void i2cReceive(int data)
 
 void i2cSetup()
 {
-    Wire.begin(slaveAddress);
+    Wire.begin(slave1Address);
     Wire.onReceive(i2cReceive);
 }
 

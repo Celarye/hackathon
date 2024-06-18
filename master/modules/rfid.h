@@ -41,14 +41,14 @@
 #define RST_PIN 9 // Configurable, see typical pin layout above
 #define SS_PIN 10 // Configurable, see typical pin layout above
 
+String userid;
+String userName;
+
 String users[4][2] = {
 		{"33826aee", "JENTE"},
 		{"43f59218", "JELLE"},
 		{"63f18418", "CAIO"},
 		{"43d29118", "EDUARD"}};
-
-String userid;
-String userName;
 
 MFRC522 mfrc522(SS_PIN, RST_PIN); // Create MFRC522 instance
 
@@ -57,27 +57,25 @@ void rfidSetup()
 	Serial.begin(9600);
 	SPI.begin();											 // Init SPI bus
 	mfrc522.PCD_Init();								 // Init MFRC522
-	delay(4);													 // Optional delay. Some board do need more time after init to be ready, see Readme
 	mfrc522.PCD_DumpVersionToSerial(); // Show details of PCD - MFRC522 Card Reader details
-	Serial.println(F("Scan PICC to see UID, SAK, type, and data blocks..."));
+	Serial.println("RFID setup succeeded");
 }
 
 String rfidLoop()
 {
-	userName = "";
-	while (userName == "")
-	{
-		Serial.println("RIFD Loop");
+	Serial.println("RIFD is listening...");
 
+	while (true)
+	{
 		if (mfrc522.PICC_IsNewCardPresent() && mfrc522.PICC_ReadCardSerial())
 		{
-			Serial.print("Card scanned: ");
+			Serial.print("RFID card scanned: ");
 			for (byte i = 0; i < mfrc522.uid.size; i++)
 			{
 				userid += String(mfrc522.uid.uidByte[i], HEX);
 			}
 
-			for (int i = 0; i < sizeof(users) / sizeof(users[0]); i++)
+			for (int i = 0; i < sizeof(users); i++)
 			{
 				if (userid == users[i][0])
 				{

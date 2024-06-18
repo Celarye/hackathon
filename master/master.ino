@@ -1,9 +1,10 @@
 #include "modules/i2c.h"
 #include "modules/remote.h"
-// #include "modules/rfid.h"
+#include "modules/rfid.h"
 #include "modules/lcd.h"
 #include "modules/mp3_player.h"
-/* All sounds used for games:
+
+/* All possible mp3 player sounds:
 1. lose sound
 2. new stage sound
 3. oppon click sound
@@ -20,20 +21,50 @@ String player[2];
 
 int gameState = 0;
 
-int gameStatePlayer1 = 0;
-int gameStatePlayer2 = 0;
+int player1Level = 0;
+int player2Level = 0;
 
-int gameStateChangePlayer1 = 0;
-int gameStateChangePlayer2 = 0;
+int player1OldLevel = 0;
+int player2OldLevel = 0;
 
 void setup()
 {
   Serial.begin(9600);
   i2cSetup();
   remoteSetup();
-  // rfidSetup();
+  rfidSetup();
   mp3Setup();
   lcdSetup();
+}
+
+int playerLevelChange(int playerOldLevel, int playerLevel)
+{
+  switch (playerOldLevel)
+  {
+  case 0:
+    return 0;
+  case 1:
+    switch (playerLevel)
+    {
+    case 1:
+      return 2;
+
+    case 2:
+      return 1;
+    }
+
+  default:
+    int LevelDifference = playerLevel - playerOldLevel;
+
+    switch (LevelDifference)
+    {
+    case -1:
+      return 2;
+
+    case 1:
+      return 1;
+    }
+  }
 }
 
 void loop()
@@ -42,89 +73,70 @@ void loop()
   {
   case 0:
     gameState = remoteLoop();
-    // for (int i = 0; i < 2; i++)
-    // {
-    //   player[i] = rfidLoop();
-    //   delay(5000);
-    // }
+    for (int i = 0; i < 2; i++)
+    {
+      player[i] = rfidLoop();
+
+      switch (i)
+      {
+      case 0:
+        delay(3000);
+        break;
+
+      default:
+        break;
+      }
+    }
+
     lcdRefresh();
-    myDFPlayer.play(6);
+    myDFPlayer.play(3);
+    Serial.println("Game start sound played");
+
+    Serial.println("Game is starting...");
+
     i2cSend(gameState);
     break;
   case 1:
-    switch (gameStatePlayer1)
+    switch (player1Level)
     {
     case 7:
       gameState = 2;
+      Serial.println("Player 1 has won");
       return;
 
     default:
-      myDFPlayer.play(gameStateChangePlayer1);
-
+      myDFPlayer.play(playerLevelChange(player1OldLevel, player1Level));
+      Serial.println("Player 1 round result sound played");
       lcdRefresh();
       break;
     }
 
-    switch (gameStatePlayer2)
+    switch (player2Level)
     {
     case 7:
       gameState = 2;
+      Serial.println("Player 2 has won");
       return;
 
     default:
-      myDFPlayer.play(gameStateChangePlayer2);
-
+      myDFPlayer.play(playerLevelChange(player2OldLevel, player2Level));
+      Serial.println("Player 2 round result sound played");
       lcdRefresh();
       break;
     }
-
-    switch (gameStateChangePlayer1)
-    {
-    case 1:
-      gameStatePlayer1 += 1;
-      break;
-    case -1:
-      if (gameStatePlayer2 != 1)
-      {
-        gameStatePlayer1 -= 1;
-      }
-      break;
-    case 0:
-      break;
-    }
-
-    switch (gameStateChangePlayer2)
-    {
-    case 1:
-      gameStatePlayer2 += 1;
-      break;
-    case -1:
-      if (gameStatePlayer2 != 1)
-      {
-        gameStatePlayer2 -= 1;
-      }
-      break;
-    case 0:
-      break;
-    }
-
-    Serial.print("GameStatePlayer1: ");
-    Serial.println(gameStatePlayer1);
-    Serial.print("GameStatePlayer2: ");
-    Serial.println(gameStatePlayer2);
-
-    gameStateChangePlayer1 = 0;
-    gameStateChangePlayer2 = 0;
 
     break;
   case 2:
     lcdRefresh();
-    myDFPlayer.play(8);
+    myDFPlayer.play(4);
+    Serial.println("Game end sound played");
     i2cSend(gameState);
 
     gameState = 0;
-    gameStatePlayer1 = 0;
-    gameStatePlayer2 = 0;
+    player1Level = 0;
+    player2Level = 0;
+
+    Serial.println("Restarting game...");
     break;
   }
 }

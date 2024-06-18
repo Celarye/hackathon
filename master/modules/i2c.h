@@ -3,30 +3,23 @@
 byte masterAddress = 0x0A;
 byte slaveAddresses[2] = {0x0B, 0x0C};
 
-extern int gameStateChangePlayer1;
-extern int gameStateChangePlayer2;
+extern int player1Level;
+extern int player2Level;
 
 void i2cReceive(int data)
 {
-  switch (Wire.read())
-  {
-  case -1:
-    gameStateChangePlayer1 = -1;
-    break;
-  case 1:
-    gameStateChangePlayer1 = 1;
-    break;
-  }
+  int playerLevel = Wire.read();
 
-  // switch (Wire.read())
-  // {
-  // case -11:
-  //   gameStateChangePlayer2 = -1;
-  //   break;
-  // case 11:
-  //   gameStateChangePlayer2 = 1;
-  //   break;
-  // }
+  if (0 <= playerLevel <= 7)
+  {
+    player1Level = playerLevel;
+    Serial.println("player1Level update received from slave 1: " + player1Level);
+  }
+  else
+  {
+    player2Level = playerLevel;
+    Serial.println("player2Level update received from slave 2: " + player2Level);
+  }
 }
 
 void i2cSetup()
@@ -34,6 +27,7 @@ void i2cSetup()
   Serial.begin(9600);
   Wire.begin(masterAddress);
   Wire.onReceive(i2cReceive);
+  Serial.println("I2C setup succeeded");
 }
 
 void i2cSend(int data)
@@ -41,9 +35,9 @@ void i2cSend(int data)
   for (const byte &slaveAddress : slaveAddresses)
   {
     Wire.beginTransmission(slaveAddress);
-    Serial.print("Sending: ");
-    Serial.println(data);
     Wire.write(data);
     Wire.endTransmission();
   }
+
+  Serial.println("Send out gameState to slaves: " + data);
 }
