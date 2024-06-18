@@ -53,6 +53,24 @@ void PlayGame(byte bound1, byte bound2)
   }
 }
 
+void resultColor(int result)
+{
+  for (byte i = 0; i < NUM_LEDS; i++)
+  {
+    switch (result)
+    {
+    case -1:
+      leds[i] = CRGB(255, 0, 0);
+      break;
+
+    case 1:
+      leds[i] = CRGB(0, 255, 0);
+      break;
+    }
+    FastLED.show();
+  }
+}
+
 int ledringLoop(int playerLevel)
 {
   FastLED.setBrightness(BRIGHTNESS);
@@ -108,13 +126,16 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
-        delay(300);
         if (Position == spot + 2 || Position == spot + 1 || Position == spot)
         {
+          resultColor(1);
+          delay(300);
           return 1;
         }
         else
         {
+          resultColor(-1);
+          delay(300);
           return -1;
         }
       }
@@ -138,13 +159,16 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
-        delay(300);
         if (Position == spot + 2 || Position == spot || Position == spot + 1)
         {
+          resultColor(1);
+          delay(300);
           return 1;
         }
         else
         {
+          resultColor(-1);
+          delay(300);
           return -1;
         }
       }
@@ -166,13 +190,16 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
-        delay(300);
         if (Position == spot + 1)
         {
+          resultColor(1);
+          delay(300);
           return 1;
         }
         else
         {
+          resultColor(-1);
+          delay(300);
           return -1;
         }
       }
@@ -194,13 +221,16 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
-        delay(300);
         if (Position == spot + 1)
         {
+          resultColor(1);
+          delay(300);
           return 1;
         }
         else
         {
+          resultColor(-1);
+          delay(300);
           return -1;
         }
       }
@@ -222,13 +252,16 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
-        delay(300);
         if (Position == spot + 1)
         {
+          resultColor(1);
+          delay(300);
           return 1;
         }
         else
         {
+          resultColor(-1);
+          delay(300);
           return -1;
         }
       }
@@ -250,13 +283,16 @@ int ledringLoop(int playerLevel)
       }
       if (digitalRead(2) == LOW)
       {
-        delay(300);
         if (Position == spot + 1)
         {
+          resultColor(1);
+          delay(300);
           return 1;
         }
         else
         {
+          resultColor(-1);
+          delay(300);
           return -1;
         }
       }
