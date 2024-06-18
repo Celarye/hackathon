@@ -69,6 +69,10 @@ void resultColor(int result)
     }
     FastLED.show();
   }
+
+  delay(500);
+
+  clearLeds();
 }
 
 int ledringLoop(int playerLevel)
@@ -129,13 +133,11 @@ int ledringLoop(int playerLevel)
         if (Position == spot + 2 || Position == spot + 1 || Position == spot)
         {
           resultColor(1);
-          delay(300);
           return 1;
         }
         else
         {
           resultColor(-1);
-          delay(300);
           return -1;
         }
       }
@@ -162,13 +164,11 @@ int ledringLoop(int playerLevel)
         if (Position == spot + 2 || Position == spot || Position == spot + 1)
         {
           resultColor(1);
-          delay(300);
           return 1;
         }
         else
         {
           resultColor(-1);
-          delay(300);
           return -1;
         }
       }
@@ -193,13 +193,11 @@ int ledringLoop(int playerLevel)
         if (Position == spot + 1)
         {
           resultColor(1);
-          delay(300);
           return 1;
         }
         else
         {
           resultColor(-1);
-          delay(300);
           return -1;
         }
       }
@@ -224,13 +222,11 @@ int ledringLoop(int playerLevel)
         if (Position == spot + 1)
         {
           resultColor(1);
-          delay(300);
           return 1;
         }
         else
         {
           resultColor(-1);
-          delay(300);
           return -1;
         }
       }
@@ -255,13 +251,11 @@ int ledringLoop(int playerLevel)
         if (Position == spot + 1)
         {
           resultColor(1);
-          delay(300);
           return 1;
         }
         else
         {
           resultColor(-1);
-          delay(300);
           return -1;
         }
       }
@@ -286,13 +280,11 @@ int ledringLoop(int playerLevel)
         if (Position == spot + 1)
         {
           resultColor(1);
-          delay(300);
           return 1;
         }
         else
         {
           resultColor(-1);
-          delay(300);
           return -1;
         }
       }
