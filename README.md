@@ -1,1 +1,3 @@
-# Hackathon
+# ARCHIVED: Hackathon
+
+Hackathon project.
